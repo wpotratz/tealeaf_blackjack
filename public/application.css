@@ -1,0 +1,119 @@
+#blackjack_header {
+  display: inline-block;
+  position: relative;
+  padding-right: 20%;
+  padding-bottom: 20px;
+}
+#messages {
+  display: inline-block;
+  position: relative;
+}
+
+#game_table {
+  width: 100%;
+  display: inline-block;
+}
+
+#players_cards {
+  float: left;
+  width: 49%;
+  margin-right: 2%;
+}
+
+#dealers_cards {
+  display: inline-block;
+  position: relative;
+  width: 49%;
+  height: auto;
+}
+
+#game_controls {
+  position: relative
+}
+
+.alert {
+  width: auto;
+}
+
+li#nav_title {
+  float: left;
+}
+
+li#nav_restart {
+  float: right;
+}
+
+form#hit_form {
+  float: left;
+  margin-right: 10px;
+}
+
+form#stay_form {
+  float: left;
+}
+
+form#play_again_form {
+  float: left;
+  margin-right: 10px;
+}
+
+form#leave_form {
+  float: left;
+}
+
+form#try_again_form {
+  float: left;
+  margin-right: 10px;
+}
+
+form#change_player_form {
+  float: left;
+  margin-right: 20px;
+}
+
+form#quit_form {
+  float: left;
+}
+
+#summary_well {
+  height: 100px;
+}
+
+#card_table {
+  position: static;
+  background-color: #BDDE7A;
+  min-width: 750px;
+  width: auto;
+  height: auto;
+  margin-top: 50px;
+  border: solid 2px #6B8E23;
+}
+
+#prompt_restart_btns {
+  position: relative;
+  display: inline-block;
+}
+
+#leave_btn {
+  margin-left: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+#table_well {
+  background-color: #6B8E23;
+  border: solid 2px #BDDE7A;
+  min-height: 180px;
+}
+
+.table_summary {
+  color: #FFFFE0;
+}
+
+.card_image {
+  margin: 0px 5px 5px 0px;
+  border-radius: 7px;
+  border: solid 1px gray;
+  width: 90px;
+  height: 132px;
+}

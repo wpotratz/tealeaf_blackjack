@@ -1,0 +1,14 @@
+<% if session[:bank] > 0 %>
+  <h3><%= session[:player_name] %>, you ended with <strong><%= to_currency(session[:bank]) %></strong></h3>
+<% else %>
+  <h3><%= session[:player_name] %>, you're broke! Better luck next time.</h3>
+<% end %>
+
+<div id="summary_well" class="well">
+  <h4>Try again?</h4>
+  <form id="try_again_form" action="/get_name?player_name=<%= session[:player_name] %>" method="post">
+    <button type="submit" class="btn btn-large">Go again!</button>
+  </form>
+  <a href="/get_name" type="button" class="btn btn-large" autofocus>Change Player</a>
+  <a id="leave_btn" href="/goodbye" type="button" class="btn btn-large btn-danger">Leave</a>
+</div>

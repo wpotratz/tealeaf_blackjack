@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/application.css">
+  </head>
+  <body style="padding-top: 50px;">
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+            <ul class="nav">
+              <li><a href="/get_name">Start Over</a></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+
+    
+  <div class="container">
+    <div class="page-header">
+      <div id="blackjack_header">
+        <h1>Blackjack</h1>
+      </div>
+      <div id="messages">
+        <%if @error %>
+          <div class="alert alert-error"><h4><%=@error%></h4></div>
+        <% elsif @success %>
+          <div class="alert alert-success"><h4><%=@success%></h4></div>
+        <% elsif @warning %>
+          <div class="alert alert-warning"><h4><%=@warning%></h4></div>
+        <% elsif @info %>
+          <div class="alert alert-info"><h4><%=@info%></h4></div>
+        <% end %>
+      </div>
+    </div>
+    <%= yield %>
+  </div>
+  </body>
+</html>

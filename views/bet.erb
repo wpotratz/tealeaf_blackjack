@@ -1,0 +1,8 @@
+<h3><%=session[:player_name]%>, make your bet!</h3>
+<h4>You have <%=to_currency(session[:bank])%> to play with, how much would you like to bet?</h4>
+
+<form action="/bet" method="post">
+  <input type="text" name="bet" placeholder="Your bet (max <%= to_currency(session[:bank])%>)" autofocus/>
+  <br/> 
+  <input type="submit" class="btn" value="Place bet" />
+</form>
