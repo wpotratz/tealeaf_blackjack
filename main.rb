@@ -74,16 +74,22 @@ helpers do
   end 
   
   def win?
-    if blackjack?(player_total) || bust?(dealer_total) || five_card_charlie?(session[:player_cards])
+    if blackjack?(player_total)
       true
-    elsif blackjack?(dealer_total) || bust?(player_total) || player_total < dealer_total
+    elsif blackjack?(dealer_total)
       false
-    elsif player_total > dealer_total
-      true
-    elsif player_total == dealer_total
-      "push"
-    else
-      false
+    elsif dealer_hit_minimum?
+      if bust?(dealer_total) || five_card_charlie?(session[:player_cards])
+        true
+      elsif bust?(player_total) || player_total < dealer_total
+        false
+      elsif player_total > dealer_total
+        true
+      elsif player_total == dealer_total
+        "push"
+      else
+        false
+      end
     end
   end
 
@@ -128,6 +134,8 @@ helpers do
   def reveal_winner_and_prompt_another_round
     display_hand_results
     @show_play_another_round_buttons = true
+    @show_hit_or_stay_buttons = false
+    @show_dealers_next_card_button = false
   end
 end
 
@@ -176,6 +184,7 @@ post '/bet' do
     erb :bet
   else
     session[:bank] -= session[:bet].to_i
+    session[:initial_cards_are_dealt] = false
     redirect '/game'
   end
 end
@@ -200,9 +209,7 @@ get '/game' do
   end
   
   if blackjack?(player_total)
-    display_hand_results
-    @show_hit_or_stay_buttons = false
-    @show_play_another_round_buttons = true
+    reveal_winner_and_prompt_another_round
     process_bet
   end
   erb :game
@@ -210,14 +217,8 @@ end
 
 get '/game/player/hit' do
   session[:player_cards] << session[:deck].pop
-  if bust?(player_total)
-    display_hand_results
-    @show_hit_or_stay_buttons = false
-    @show_play_another_round_buttons = true
-  elsif blackjack?(player_total) || five_card_charlie?(session[:player_cards])
-    display_hand_results
-    @show_hit_or_stay_buttons = false
-    @show_play_another_round_buttons = true
+  if blackjack?(player_total) || bust?(player_total)
+    reveal_winner_and_prompt_another_round
     process_bet
   end
   erb :game
@@ -226,37 +227,36 @@ end
 get '/game/player/stay' do
   @info = "#{session[:player_name]} has chosen to stay with #{calculate_total(session[:player_cards])}!"
   @show_hit_or_stay_buttons = false
+  @show_dealers_hand_button = true
+  erb :game
+end
 
+get '/game/dealer/show_hand' do
   session[:turn] = "dealer"
-
-  if blackjack?(dealer_total) || dealer_hit_minimum? || win? == 'push'
+  @show_hit_or_stay_buttons = false
+  @show_dealers_hand_button = false
+  if dealer_hit_minimum?
     reveal_winner_and_prompt_another_round
     process_bet
   else
     @show_dealers_next_card_button = true
-  end
+  end  
   erb :game
 end
 
 get '/game/dealer/play' do
   @show_hit_or_stay_buttons = false
   @show_dealers_next_card_button = false
-  if blackjack?(dealer_total)
-    reveal_winner_and_prompt_another_round
-  elsif !dealer_hit_minimum?
-    session[:dealer_cards] << session[:deck].pop
-    if !bust?(dealer_total) && dealer_hit_minimum?
-      reveal_winner_and_prompt_another_round
-      process_bet
-    elsif win? && dealer_hit_minimum?
-      reveal_winner_and_prompt_another_round
-      process_bet
-    else
-      @show_dealers_next_card_button = true
-    end
-  else
+  if dealer_hit_minimum?
     reveal_winner_and_prompt_another_round
     process_bet
+  else
+    session[:dealer_cards] << session[:deck].pop
+    @show_dealers_next_card_button = true
+    if dealer_hit_minimum?
+      reveal_winner_and_prompt_another_round
+      process_bet
+    end
   end
   erb :game
 end

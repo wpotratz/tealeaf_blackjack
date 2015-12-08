@@ -26,6 +26,9 @@
     <% if @show_dealers_next_card_button %>
       <a href="/game/dealer/play" class="btn btn-info btn-large">Show dealer's next card</a>
     <% end %>
+    <% if @show_dealers_hand_button %>
+      <a href="/game/dealer/show_hand" class="btn btn-info btn-large">Show Dealer's Hand >></a>
+    <% end %> 
   </div>
 </div>
 
@@ -33,8 +36,8 @@
 <% if @show_hit_or_stay_buttons %>
   <p>
     <h3>Hit or stay?</h3>
-    <a href="/game/player/hit" class="btn btn-success">Hit</a>
-    <a href="/game/player/stay" class="btn btn-warning">Stay</a>
+    <a href="/game/player/hit" class="btn btn-success btn-large">Hit</a>
+    <a href="/game/player/stay" class="btn btn-warning btn-large">Stay</a>
   </p>
 <% end %>
 
