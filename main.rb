@@ -187,14 +187,17 @@ end
 get '/game' do
   session[:turn] = session[:player_name]
   
-  values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
-  suits = ['H','D','S','C']
-  session[:deck] = suits.product(values).shuffle!
-  
-  session[:dealer_cards] = []
-  session[:player_cards] = []
-  2.times {session[:dealer_cards] << session[:deck].pop}
-  2.times {session[:player_cards] << session[:deck].pop}
+  if session[:initial_cards_are_dealt] == false
+    values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
+    suits = ['H','D','S','C']
+    session[:deck] = suits.product(values).shuffle!
+    
+    session[:dealer_cards] = []
+    session[:player_cards] = []
+    2.times {session[:dealer_cards] << session[:deck].pop}
+    2.times {session[:player_cards] << session[:deck].pop}
+    session[:initial_cards_are_dealt] = true
+  end
   
   if blackjack?(player_total)
     display_hand_results
@@ -260,6 +263,7 @@ get '/game/dealer/play' do
 end
 
 get '/game/player/play_again' do
+  session[:initial_cards_are_dealt] = false
   redirect '/bet'
 end
 
