@@ -228,14 +228,13 @@ get '/game/player/stay' do
   @show_hit_or_stay_buttons = false
 
   session[:turn] = "dealer"
-  
+
   if blackjack?(dealer_total) || dealer_hit_minimum? || win? == 'push'
     reveal_winner_and_prompt_another_round
     process_bet
   else
     @show_dealers_next_card_button = true
   end
-  
   erb :game
 end
 
