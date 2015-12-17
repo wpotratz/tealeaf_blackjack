@@ -1,51 +1,64 @@
-<div id="game_table">
-  <div id="players_cards">
-    <h3><%=session[:player_name]%>'s Cards:</h3>
-    <div id="table_well" class="well">
-      <% session[:player_cards].each do |card| %>
-        <img class="card_image" src=<%= card_image(card) %> />
-      <% end %>
-      <h4 class="table_summary">Total: <%= calculate_total(session[:player_cards]) %></h4>
-    </div>
-    <h4><%=session[:player_name]%>'s Bank: <strong><%= to_currency(session[:bank]) %></strong>&nbsp &nbsp &nbsp Current Bet: <strong><%= to_currency(session[:bet]) %></strong></h4>
-  </div>
-  <div id="dealers_cards">
-    <h3>Dealer's Cards:</h3>
-    <div id="table_well" class="well">
-      <% session[:dealer_cards].each_with_index do |card, i| %>
-        <% if session[:turn] != "dealer" && i == 0 %>
-          <img class="card_image" src="/images/cards/cover.jpg" />
-        <% else %>
+<div id="game_container">
+  <div id="messages">
+  <%if @error %>
+    <div class="alert alert-error"><h4><%=@error%></h4></div>
+  <% elsif @success %>
+    <div class="alert alert-success"><h4><%=@success%></h4></div>
+  <% elsif @warning %>
+    <div class="alert alert-warning"><h4><%=@warning%></h4></div>
+  <% elsif @info %>
+    <div class="alert alert-info"><h4><%=@info%></h4></div>
+  <% end %>
+</div>
+  <div id="game_table">
+    <div id="players_cards">
+      <h3><%=session[:player_name]%>'s Cards:</h3>
+      <div id="table_well" class="well">
+        <% session[:player_cards].each do |card| %>
           <img class="card_image" src=<%= card_image(card) %> />
         <% end %>
-      <% end %>
-      <% if session[:turn] == "dealer" %>
-        <h4 class="table_summary">Total: <%= calculate_total(session[:dealer_cards]) %></h4>
-      <% end %>
+        <h4 class="table_summary">Total: <%= calculate_total(session[:player_cards]) %></h4>
+      </div>
+      <h4><%=session[:player_name]%>'s Bank: <strong><%= to_currency(session[:bank]) %></strong>&nbsp &nbsp &nbsp Current Bet: <strong><%= to_currency(session[:bet]) %></strong></h4>
     </div>
-    <% if @show_dealers_next_card_button %>
-      <a href="/game/dealer/play" class="btn btn-info btn-large">Show dealer's next card</a>
-    <% end %>
-    <% if @show_dealers_hand_button %>
-      <a href="/game/dealer/show_hand" class="btn btn-info btn-large">Show Dealer's Hand >></a>
-    <% end %> 
+    <div id="dealers_cards">
+      <h3>Dealer's Cards:</h3>
+      <div id="table_well" class="well">
+        <% session[:dealer_cards].each_with_index do |card, i| %>
+          <% if session[:turn] != "dealer" && i == 0 %>
+            <img class="card_image" src="/images/cards/cover.jpg" />
+          <% else %>
+            <img class="card_image" src=<%= card_image(card) %> />
+          <% end %>
+        <% end %>
+        <% if session[:turn] == "dealer" %>
+          <h4 class="table_summary">Total: <%= calculate_total(session[:dealer_cards]) %></h4>
+        <% end %>
+      </div>
+      <% if @show_dealers_next_card_button %>
+        <a id="show_dealers_next_card_btn" href="/game/dealer/play" class="btn btn-info btn-large">Show dealer's next card</a>
+      <% end %>
+      <% if @show_dealers_hand_button %>
+        <a id="show_dealers_hand_btn" href="/game/dealer/show_hand" class="btn btn-info btn-large">Show Dealer's Hand >></a>
+      <% end %> 
+    </div>
   </div>
-</div>
- 
-<div id="game_controls">
-<% if @show_hit_or_stay_buttons %>
-  <p>
-    <h3>Hit or stay?</h3>
-    <a href="/game/player/hit" class="btn btn-success btn-large">Hit</a>
-    <a href="/game/player/stay" class="btn btn-warning btn-large">Stay</a>
-  </p>
-<% end %>
-
-<% if @show_play_another_round_buttons %>
-  <p>
-    <h3>Play another round?</h3>
-    <a href="/game/player/play_again" class="btn btn-success">Play again!</a>
-    <a href="/game/summary" class="btn">Leave</a>
-  </p>
-<% end %>
+   
+  <div id="game_controls">
+  <% if @show_hit_or_stay_buttons %>
+    <p>
+      <h3>Hit or stay?</h3>
+      <a id="hit_btn" href="/game/player/hit" class="btn btn-success btn-large">Hit</a>
+      <a id="stay_btn" href="/game/player/stay" class="btn btn-warning btn-large">Stay</a>
+    </p>
+  <% end %>
+  
+  <% if @show_play_another_round_buttons %>
+    <p>
+      <h3>Play another round?</h3>
+      <a href="/game/player/play_again" class="btn btn-success">Play again!</a>
+      <a href="/game/summary" class="btn">Leave</a>
+    </p>
+  <% end %>
+  </div>
 </div>

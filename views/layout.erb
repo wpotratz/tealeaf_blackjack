@@ -4,6 +4,8 @@
     <title>Blackjack</title>
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/application.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/application.js"></script>
   </head>
   <body style="padding-top: 50px;">
 
@@ -17,25 +19,14 @@
       </div>
     </div>
 
-    
-  <div class="container">
-    <div class="page-header">
+    <div class="container">
       <div id="blackjack_header">
         <h1>Blackjack</h1>
       </div>
-      <div id="messages">
-        <%if @error %>
-          <div class="alert alert-error"><h4><%=@error%></h4></div>
-        <% elsif @success %>
-          <div class="alert alert-success"><h4><%=@success%></h4></div>
-        <% elsif @warning %>
-          <div class="alert alert-warning"><h4><%=@warning%></h4></div>
-        <% elsif @info %>
-          <div class="alert alert-info"><h4><%=@info%></h4></div>
-        <% end %>
+      <div class="page-header">
       </div>
+      <%= yield %>
     </div>
-    <%= yield %>
-  </div>
+    
   </body>
 </html>

@@ -181,7 +181,7 @@ post '/bet' do
   session[:bet] = params[:bet].to_i
   if session[:bet] <= 0 || session[:bet] > session[:bank]
     @error = "Please enter a valid bet."
-    erb :bet
+    halt erb(:bet)
   else
     session[:bank] -= session[:bet].to_i
     session[:initial_cards_are_dealt] = false
@@ -221,14 +221,14 @@ get '/game/player/hit' do
     reveal_winner_and_prompt_another_round
     process_bet
   end
-  erb :game
+  erb :game, layout: false
 end
 
 get '/game/player/stay' do
   @info = "#{session[:player_name]} has chosen to stay with #{calculate_total(session[:player_cards])}!"
   @show_hit_or_stay_buttons = false
   @show_dealers_hand_button = true
-  erb :game
+  erb :game, layout: false
 end
 
 get '/game/dealer/show_hand' do
@@ -241,7 +241,7 @@ get '/game/dealer/show_hand' do
   else
     @show_dealers_next_card_button = true
   end  
-  erb :game
+  erb :game, layout: false
 end
 
 get '/game/dealer/play' do
@@ -258,7 +258,7 @@ get '/game/dealer/play' do
       process_bet
     end
   end
-  erb :game
+  erb :game, layout: false
 end
 
 get '/game/player/play_again' do
@@ -268,4 +268,4 @@ end
 
 get "/goodbye" do
   erb :goodbye
-end 
+end
