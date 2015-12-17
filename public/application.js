@@ -4,7 +4,7 @@ $(document).ready(function() {
   show_dealers_hand();
   show_dealers_next_card();
 }); 
-  
+
 function player_hit() {
   $(document).on('click', '#hit_btn', function() {
     $.ajax({

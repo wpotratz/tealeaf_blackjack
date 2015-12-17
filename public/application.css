@@ -1,15 +1,4 @@
 
-/*#blackjack_header {
-  display: inline-block;
-  position: relative;
-  padding-right: 20%;
-  padding-bottom: 20px;
-}
-#messages {
-  display: inline-block;
-  position: relative;
-}*/
-
 #game_table {
   width: 100%;
   display: inline-block;

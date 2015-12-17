@@ -17,7 +17,7 @@ helpers do
     value = amount.to_i
     "$" + value.to_s
   end
-  
+
   def calculate_total(hand)
     hand_total = 0
     hand.each do |card|  
